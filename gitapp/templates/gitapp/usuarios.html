@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="{% static 'gitapp/estilo.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>Usuarios</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'index' %}">Inicio</a></li>
+        <li><a href="{% url 'ejercicios' %}">Ejercicios</a></li>
+        <li><a href="{% url 'rutinas' %}">Rutinas</a></li>
+    </ul>
+</nav>
+
+<main>
+    <h2>Lista de Usuarios</h2>
+
+    <ul>
+        {% for usuario in usuarios %}
+            <li>
+                <strong>{{ usuario.nombre }}</strong><br>
+                Nivel de Condición Física: {{ usuario.nivel_condicion }}<br>
+                Rutinas Completadas: {{ usuario.rutinas_completadas }}<br>
+                <a href="{% url 'editar_usuario' usuario.id %}">Editar</a> |
+                <a href="{% url 'eliminar_usuario' usuario.id %}">Eliminar</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Agregar Usuario</h3>
+    <form action="{% url 'agregar_usuario' %}" method="POST">
+        {% csrf_token %}
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+        <label for="nivel_condicion">Nivel de Condición Física:</label>
+        <select id="nivel_condicion" name="nivel_condicion" required>
+            <option value="Principiante">Principiante</option>
+            <option value="Intermedio">Intermedio</option>
+            <option value="Avanzado">Avanzado</option>
+        </select><br>
+        <label for="rutinas_completadas">Rutinas Completadas:</label>
+        <input type="number" id="rutinas_completadas" name="rutinas_completadas" required><br>
+        <button type="submit">Agregar Usuario</button>
+    </form>
+</main>
+
+</body>
+</html>

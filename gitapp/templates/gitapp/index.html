@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenamiento Diario</title>
+    <link rel="stylesheet" href="{% static 'gitapp/estilo.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>Bienvenido a Entrenamiento Diario</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'ejercicios' %}">Ejercicios</a></li>
+        <li><a href="{% url 'rutinas' %}">Rutinas</a></li>
+        <li><a href="{% url 'usuarios' %}">Usuarios</a></li>
+    </ul>
+</nav>
+
+<main>
+    <h2>¡Comienza tu entrenamiento ahora!</h2>
+</main>
+
+</body>
+</html>
