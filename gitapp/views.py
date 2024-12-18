@@ -43,7 +43,6 @@ def ejercicios(request):
     ejercicios = Ejercicio.objects.all()
     return render(request, 'gitapp/ejercicios.html', {'ejercicios': ejercicios})
 
-# Vista para agregar rutina
 @csrf_protect
 @login_required  # Solo usuarios autenticados pueden acceder a esta vista
 def agregar_rutina(request):
