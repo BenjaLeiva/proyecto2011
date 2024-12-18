@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Ejercicio</title>
+    <link rel="stylesheet" href="{% static 'gitapp/estilo.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>Editar Ejercicio: {{ ejercicio.nombre }}</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'index' %}">Inicio</a></li>
+        <li><a href="{% url 'ejercicios' %}">Ejercicios</a></li>
+        <li><a href="{% url 'rutinas' %}">Rutinas</a></li>
+        <li><a href="{% url 'usuarios' %}">Usuarios</a></li>
+    </ul>
+</nav>
+
+<main>
+    <h2>Formulario para Editar Ejercicio</h2>
+    <form action="{% url 'editar_ejercicio' ejercicio.id %}" method="POST">
+        {% csrf_token %}
+        <label for="nombre">Nombre del Ejercicio:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ ejercicio.nombre }}" required><br>
+        
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required>{{ ejercicio.descripcion }}</textarea><br>
+
+        <label for="dificultad">Dificultad:</label>
+        <select id="dificultad" name="dificultad" required>
+            <option value="Baja" {% if ejercicio.dificultad == 'Baja' %}selected{% endif %}>Baja</option>
+            <option value="Media" {% if ejercicio.dificultad == 'Media' %}selected{% endif %}>Media</option>
+            <option value="Alta" {% if ejercicio.dificultad == 'Alta' %}selected{% endif %}>Alta</option>
+        </select><br>
+
+        <button type="submit">Actualizar Ejercicio</button>
+    </form>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Ejercicio</title>
+    <link rel="stylesheet" href="{% static 'gitapp/estilo.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>Eliminar Ejercicio</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'index' %}">Inicio</a></li>
+        <li><a href="{% url 'ejercicios' %}">Ejercicios</a></li>
+        <li><a href="{% url 'rutinas' %}">Rutinas</a></li>
+        <li><a href="{% url 'usuarios' %}">Usuarios</a></li>
+    </ul>
+</nav>
+
+<main>
+    <h2>¿Estás seguro de que deseas eliminar el ejercicio "{{ ejercicio.nombre }}"?</h2>
+    <p>Esta acción no se puede deshacer.</p>
+
+    <form action="{% url 'eliminar_ejercicio' ejercicio.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Eliminar</button>
+        <a href="{% url 'ejercicios' %}">Cancelar</a>
+    </form>
+</main>
+
+</body>
+</html>

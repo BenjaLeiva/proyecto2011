@@ -1,0 +1,27 @@
+<!-- gitapp/templates/gitapp/login.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Entrenamiento Diario</title>
+    <link rel="stylesheet" href="{% static 'gitapp/estilo.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>Inicia sesión en Entrenamiento Diario</h1>
+</header>
+
+<main>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Iniciar sesión</button>
+    </form>
+</main>
+
+</body>
+</html>

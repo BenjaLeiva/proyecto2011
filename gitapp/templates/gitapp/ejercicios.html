@@ -19,12 +19,12 @@
         <li><a href="{% url 'index' %}">Inicio</a></li>
         <li><a href="{% url 'rutinas' %}">Rutinas</a></li>
         <li><a href="{% url 'usuarios' %}">Usuarios</a></li>
+        <li><a href="{% url 'agregar_ejercicio' %}">Agregar Ejercicio</a></li>
     </ul>
 </nav>
 
 <main>
     <h2>Lista de Ejercicios</h2>
-
     <ul>
         {% for ejercicio in ejercicios %}
             <li>
@@ -36,22 +36,6 @@
             </li>
         {% endfor %}
     </ul>
-
-    <h3>Agregar Ejercicio</h3>
-    <form action="{% url 'agregar_ejercicio' %}" method="POST">
-        {% csrf_token %}
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required><br>
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" name="descripcion" required></textarea><br>
-        <label for="dificultad">Dificultad:</label>
-        <select id="dificultad" name="dificultad" required>
-            <option value="Baja">Baja</option>
-            <option value="Media">Media</option>
-            <option value="Alta">Alta</option>
-        </select><br>
-        <button type="submit">Agregar Ejercicio</button>
-    </form>
 </main>
 
 </body>

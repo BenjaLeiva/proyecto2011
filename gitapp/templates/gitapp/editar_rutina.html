@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Rutina</title>
+    <link rel="stylesheet" href="{% static 'gitapp/estilo.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>Editar Rutina: {{ rutina.nombre }}</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'index' %}">Inicio</a></li>
+        <li><a href="{% url 'ejercicios' %}">Ejercicios</a></li>
+        <li><a href="{% url 'usuarios' %}">Usuarios</a></li>
+    </ul>
+</nav>
+
+<main>
+    <h2>Formulario para Editar Rutina</h2>
+    <form action="{% url 'editar_rutina' rutina.id %}" method="POST">
+        {% csrf_token %}
+        <label for="nombre">Nombre de la Rutina:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ rutina.nombre }}" required><br>
+
+        <label for="duracion">Duración (minutos):</label>
+        <input type="number" id="duracion" name="duracion" value="{{ rutina.duracion }}" required><br>
+
+        <label for="ejercicios">Ejercicios:</label>
+        <select id="ejercicios" name="ejercicios" multiple>
+            {% for ejercicio in ejercicios %}
+                <option value="{{ ejercicio.id }}" {% if ejercicio in rutina.ejercicios.all %}selected{% endif %}>{{ ejercicio.nombre }}</option>
+            {% endfor %}
+        </select><br>
+
+        <button type="submit">Actualizar Rutina</button>
+    </form>
+</main>
+
+</body>
+</html>

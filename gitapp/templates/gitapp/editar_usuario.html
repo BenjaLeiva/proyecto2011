@@ -1,3 +1,5 @@
+<!-- gitapp/templates/gitapp/editar_usuario.html -->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -5,13 +7,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Usuario - Entrenamiento Diario</title>
+    <title>Editar Usuario - Entrenamiento Diario</title>
     <link rel="stylesheet" href="{% static 'gitapp/estilo.css' %}">
 </head>
 <body>
 
 <header>
-    <h1>Agregar Nuevo Usuario</h1>
+    <h1>Editar Usuario</h1>
 </header>
 
 <nav>
@@ -23,28 +25,28 @@
 </nav>
 
 <main>
-    <h2>Formulario para Agregar Usuario</h2>
-    <form action="{% url 'agregar_usuario' %}" method="POST">
+    <h2>Formulario para Editar Usuario</h2>
+    <form action="{% url 'editar_usuario' usuario.id %}" method="POST">
         {% csrf_token %}
         
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required><br>
+        <input type="text" id="nombre" name="nombre" value="{{ usuario.nombre }}" required><br>
         
         <label for="nivel_condicion">Nivel de Condición Física:</label>
         <select id="nivel_condicion" name="nivel_condicion" required>
-            <option value="Bajo">Bajo</option>
-            <option value="Medio">Medio</option>
-            <option value="Alto">Alto</option>
+            <option value="Bajo" {% if usuario.nivel_condicion_fisica == "Bajo" %}selected{% endif %}>Bajo</option>
+            <option value="Medio" {% if usuario.nivel_condicion_fisica == "Medio" %}selected{% endif %}>Medio</option>
+            <option value="Alto" {% if usuario.nivel_condicion_fisica == "Alto" %}selected{% endif %}>Alto</option>
         </select><br>
         
         <label for="rutinas_completadas">Rutinas Completadas:</label>
         <select id="rutinas_completadas" name="rutinas_completadas" multiple>
             {% for rutina in rutinas %}
-                <option value="{{ rutina.id }}">{{ rutina.nombre }}</option>
+                <option value="{{ rutina.id }}" {% if rutina in usuario.rutinas_completadas.all %}selected{% endif %}>{{ rutina.nombre }}</option>
             {% endfor %}
         </select><br>
         
-        <button type="submit">Agregar Usuario</button>
+        <button type="submit">Guardar Cambios</button>
     </form>
 </main>
 
