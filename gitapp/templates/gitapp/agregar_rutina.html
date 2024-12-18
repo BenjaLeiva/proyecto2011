@@ -5,13 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rutinas</title>
+    <title>Agregar Rutina</title>
     <link rel="stylesheet" href="{% static 'gitapp/estilo.css' %}">
 </head>
 <body>
 
 <header>
-    <h1>Rutinas</h1>
+    <h1>Agregar Rutina</h1>
 </header>
 
 <nav>
@@ -23,38 +23,27 @@
 </nav>
 
 <main>
-    <h2>Lista de Rutinas</h2>
+    <h2>Formulario para Agregar Rutina</h2>
 
-    <ul>
-        {% for rutina in rutinas %}
-            <li>
-                <strong>{{ rutina.nombre }}</strong><br>
-                Duración: {{ rutina.duracion }} minutos<br>
-                Ejercicios: 
-                <ul>
-                    {% for ejercicio in rutina.ejercicios.all %}
-                        <li>{{ ejercicio.nombre }}</li>
-                    {% endfor %}
-                </ul>
-                <a href="{% url 'editar_rutina' rutina.id %}">Editar</a> |
-                <a href="{% url 'eliminar_rutina' rutina.id %}">Eliminar</a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
 
-    <h3>Agregar Rutina</h3>
     <form action="{% url 'agregar_rutina' %}" method="POST">
         {% csrf_token %}
-        <label for="nombre">Nombre:</label>
+        
+        <label for="nombre">Nombre de la Rutina:</label>
         <input type="text" id="nombre" name="nombre" required><br>
+
         <label for="duracion">Duración (minutos):</label>
         <input type="number" id="duracion" name="duracion" required><br>
-        <label for="ejercicios">Ejercicios:</label>
-        <select id="ejercicios" name="ejercicios" multiple>
-            {% for ejercicio in ejercicios %}
-                <option value="{{ ejercicio.id }}">{{ ejercicio.nombre }}</option>
-            {% endfor %}
-        </select><br>
+
+        <label>Ejercicios:</label><br>
+        {% for ejercicio in ejercicios %}
+            <input type="checkbox" id="ejercicio_{{ ejercicio.id }}" name="ejercicios" value="{{ ejercicio.id }}">
+            <label for="ejercicio_{{ ejercicio.id }}">{{ ejercicio.nombre }}</label><br>
+        {% endfor %}
+
         <button type="submit">Agregar Rutina</button>
     </form>
 </main>

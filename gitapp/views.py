@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+from datetime import timedelta
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -44,18 +45,31 @@ def ejercicios(request):
     return render(request, 'gitapp/ejercicios.html', {'ejercicios': ejercicios})
 
 @csrf_protect
-@login_required  # Solo usuarios autenticados pueden acceder a esta vista
+@login_required
 def agregar_rutina(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
         ejercicios_ids = request.POST.getlist('ejercicios')  # Lista de IDs de ejercicios seleccionados
         duracion = request.POST.get('duracion')
-        # Creación de la rutina
+
+        try:
+            # Convertir duración a un objeto timedelta (minutos -> timedelta)
+            duracion = timedelta(minutes=int(duracion))
+        except ValueError:
+            return render(request, 'gitapp/agregar_rutina.html', {'error': 'La duración debe ser un número entero de minutos.'})
+
+        if not ejercicios_ids:
+            # Si no se seleccionaron ejercicios, muestra un mensaje de error
+            return render(request, 'gitapp/agregar_rutina.html', {'error': 'Debe seleccionar al menos un ejercicio.'})
+
+        # Creación de la rutina con la duración convertida
         rutina = Rutina.objects.create(nombre=nombre, duracion=duracion)
         rutina.ejercicios.set(ejercicios_ids)  # Asociar ejercicios a la rutina
         return redirect('rutinas')  # Redirige a la lista de rutinas
+
     ejercicios = Ejercicio.objects.all()  # Obtener todos los ejercicios para la vista de agregar rutina
     return render(request, 'gitapp/agregar_rutina.html', {'ejercicios': ejercicios})
+
 
 # Vista para listar rutinas
 def rutinas(request):
