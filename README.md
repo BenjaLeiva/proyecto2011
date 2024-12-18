@@ -94,5 +94,5 @@ Vistas (views.py): Si deseas modificar la lógica de las vistas.
 Plantillas HTML (templates/): Si deseas cambiar la apariencia de la interfaz de usuario.
 Estilos CSS (static/): Para personalizar el diseño de la página web.
 
-[extra] link del repositorio
-https://github.com/BenjaLeiva/proyecto2011.git
+link del repositorio
+<!--https://github.com/BenjaLeiva/proyecto2011.git-->
