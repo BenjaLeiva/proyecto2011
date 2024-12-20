@@ -39,12 +39,12 @@
             <option value="Alto" {% if usuario.nivel_condicion_fisica == "Alto" %}selected{% endif %}>Alto</option>
         </select><br>
         
-        <label for="rutinas_completadas">Rutinas Completadas:</label>
-        <select id="rutinas_completadas" name="rutinas_completadas" multiple>
-            {% for rutina in rutinas %}
-                <option value="{{ rutina.id }}" {% if rutina in usuario.rutinas_completadas.all %}selected{% endif %}>{{ rutina.nombre }}</option>
-            {% endfor %}
-        </select><br>
+        <label>Rutinas Completadas:</label><br>
+        {% for rutina in rutinas %}
+            <input type="checkbox" id="rutina_{{ rutina.id }}" name="rutinas_completadas" value="{{ rutina.id }}"
+                {% if rutina in usuario.rutinas_completadas.all %}checked{% endif %}>
+            <label for="rutina_{{ rutina.id }}">{{ rutina.nombre }}</label><br>
+        {% endfor %}
         
         <button type="submit">Guardar Cambios</button>
     </form>
